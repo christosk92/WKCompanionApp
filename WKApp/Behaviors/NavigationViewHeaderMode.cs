@@ -1,0 +1,9 @@
+﻿namespace WKApp.Behaviors
+{
+    public enum NavigationViewHeaderMode
+    {
+        Always,
+        Never,
+        Minimal
+    }
+}

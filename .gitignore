@@ -3,3 +3,13 @@
 ################################################################################
 
 /WKApp/.vs/WKApp/v16
+/WKApp/obj
+/WKApp/bin/x86/Debug
+/WKApp.Core/bin/Debug/netstandard2.0
+/WKApp.Core/obj
+/WKApp/Assets/vocab_id.json
+/WKApp/Assets/vocab.json
+/WKApp/Assets/radical_id.json
+/WKApp/Assets/radical.json
+/WKApp/Assets/kanji_id.json
+/WKApp/Assets/kanji.json
