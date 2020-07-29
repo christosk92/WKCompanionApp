@@ -155,6 +155,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
+    <Compile Include="Helpers\TagHelper.cs" />
     <Compile Include="Models\DataGridData.cs" />
     <Compile Include="Models\IdData.cs" />
     <Compile Include="Models\LoginResultType.cs" />
@@ -172,6 +173,9 @@
     <Compile Include="Services\ToastNotificationsService.Samples.cs" />
     <Compile Include="Services\UserDataService.cs" />
     <Compile Include="Services\IWaniKaniApi.cs" />
+    <Compile Include="ViewModels\DetailControls\RadicalDetailViewModel.cs" />
+    <Compile Include="ViewModels\DetailControls\VocabDetailViewModel.cs" />
+    <Compile Include="ViewModels\DetailControls\KanjiDetailViewModel.cs" />
     <Compile Include="ViewModels\LevelsContentGridDetailViewModel.cs" />
     <Compile Include="ViewModels\LevelsContentGridViewModel.cs" />
     <Compile Include="ViewModels\LevelsViewModel.cs" />
@@ -181,6 +185,15 @@
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\DetailControls\KanjiDetailPage.xaml.cs">
+      <DependentUpon>KanjiDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DetailControls\RadicalDetailPage.xaml.cs">
+      <DependentUpon>RadicalDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DetailControls\VocabDetailPage.xaml.cs">
+      <DependentUpon>VocabDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LevelsContentGridDetailPage.xaml.cs">
       <DependentUpon>LevelsContentGridDetailPage.xaml</DependentUpon>
     </Compile>
@@ -230,6 +243,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DetailControls\KanjiDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DetailControls\RadicalDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DetailControls\VocabDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

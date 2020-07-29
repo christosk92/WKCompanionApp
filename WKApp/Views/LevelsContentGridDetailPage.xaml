@@ -6,6 +6,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:views="using:WKApp.Views.DetailControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
@@ -13,9 +14,9 @@
     <Pivot x:Name="rootPivot">
         <PivotItem Header="Info">
             <Grid x:Name="ContentArea"
-                  Margin="5"
-                  animations:Connected.AnchorElement="{x:Bind Path=itemHero}">
-                
+                  Margin="5">
+                <views:KanjiDetailPage x:Name="kanjiDetailpage" />
+
 
             </Grid>
         </PivotItem>

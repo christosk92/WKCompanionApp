@@ -3,7 +3,9 @@
 using GalaSoft.MvvmLight.Ioc;
 
 using WKApp.Services;
+using WKApp.ViewModels.DetailControls;
 using WKApp.Views;
+using WKApp.Views.DetailControls;
 
 namespace WKApp.ViewModels
 {
@@ -23,6 +25,7 @@ namespace WKApp.ViewModels
             Register<LevelsContentGridViewModel, LevelsContentGridPage>();
             Register<LevelsContentGridDetailViewModel, LevelsContentGridDetailPage>();
             Register<SettingsViewModel, SettingsPage>();
+            Register<KanjiDetailViewModel, KanjiDetailPage>();
             Register<SignInViewModel, SignInPage>();
         }
 
@@ -33,6 +36,7 @@ namespace WKApp.ViewModels
         public LevelsContentGridDetailViewModel LevelsContentGridDetailViewModel => SimpleIoc.Default.GetInstance<LevelsContentGridDetailViewModel>();
 
         public LevelsContentGridViewModel LevelsContentGridViewModel => SimpleIoc.Default.GetInstance<LevelsContentGridViewModel>();
+        public KanjiDetailViewModel KanjiDetailViewModel => SimpleIoc.Default.GetInstance<KanjiDetailViewModel>();
 
         public LevelsViewModel LevelsViewModel => SimpleIoc.Default.GetInstance<LevelsViewModel>();
 

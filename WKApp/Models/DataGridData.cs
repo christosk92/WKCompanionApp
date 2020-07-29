@@ -15,5 +15,6 @@ namespace WKApp.Models
         public string Meaning { get; set; }
         public string Level;
         public double score;
+        public string Id { get; set; }
     }
 }

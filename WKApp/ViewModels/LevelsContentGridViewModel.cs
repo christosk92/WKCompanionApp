@@ -48,7 +48,8 @@ namespace WKApp.ViewModels
                             MainReading = k.MainReading,
                             Meaning = x.data.meanings.FirstOrDefault(y => y.primary)?.meaning,
                             Level = k.Level,
-                            Title = k.Title
+                            Title = k.Title,
+                            Id = k.Id
                         });
                     }
                     break;

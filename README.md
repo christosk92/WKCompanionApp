@@ -6,3 +6,6 @@ If you want to get these, you should acquire them with your own WaniKani account
 # Roadmap
 
 Right now the app is being built for UWP only. However down the line I will port it over to macOS using [Uno](https://github.com/unoplatform/uno)
+
+# Progress:
+![:D](unknown.png)
