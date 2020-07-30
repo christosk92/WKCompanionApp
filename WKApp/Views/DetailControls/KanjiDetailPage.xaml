@@ -5,6 +5,8 @@
     xmlns:local="using:WKApp.Views.DetailControls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:models="using:WKApp.Models"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:winui2="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:Converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,8 +15,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <UserControl.Resources>
         <Converters:BoolNegationConverter x:Key="InverseBooleanConverter" />
+        <winui:TeachingTip x:Name="ToggleThemeTeachingTip1"
+	Target="{x:Bind itemHero}"
+                           PreferredPlacement="Right"
+	Title="Stroke order">
+            <WebView DefaultBackgroundColor="Transparent" x:Name="webV"  Width="150" Height="150"/>
+        </winui:TeachingTip>
     </UserControl.Resources>
-    <Grid x:Name="ContentArea"
+    <ScrollViewer>
+        <Grid x:Name="ContentArea"
                   Margin="5"
                   animations:Connected.AnchorElement="{x:Bind Path=itemHero}">
         <StackPanel Margin="15" x:Name="contentPanel">
@@ -31,6 +40,8 @@
                                   Padding="{StaticResource XSmallLeftTopRightBottomMargin}"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
+                          PointerEntered="itemHero_PointerEntered"
+                          PointerExited="itemHero_PointerExited"
                                   animations:Connected.Key="animationKeyKanjiLevelControl"
                                   Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
                                   RelativePanel.AlignTopWithPanel="True"
@@ -146,12 +157,11 @@
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>
-            <Border x:Name="Seperator"
+            <MenuFlyoutSeparator
                             Grid.Row="4"
                             Grid.Column="4"
                             BorderThickness="0,1,0,0"
-                            BorderBrush="#33000000"
-                            Margin="0,30"></Border>
+                            Margin="0,30"></MenuFlyoutSeparator>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
@@ -174,6 +184,52 @@
                                        x:Name="ReadingSubd" />
                 </RelativePanel>
             </Grid>
-        </StackPanel>
+                <MenuFlyoutSeparator
+                            Grid.Row="4"
+                            Grid.Column="4"
+                            BorderThickness="0,1,0,0"
+                            Margin="0,30"></MenuFlyoutSeparator>
+                <TextBlock Margin="{StaticResource SmallTopMargin}"
+                               Style="{StaticResource TitleTextBlockStyle}"
+                               Text="Found in vocabulary" />
+                <controls:AdaptiveGridView Grid.Row="1"
+                                       Padding="0,10"
+                                               animations:Connected.ListItemElementName="itemThumbnail"
+                                               animations:Connected.ListItemKey="animationKeyContentGrid"
+                                               DesiredWidth="130"
+                                               ItemHeight="130"
+                                               IsItemClickEnabled="True"
+                                               ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+                                               ItemsSource="{x:Bind Path=ViewModel.FoundInVocab,Mode=OneWay}"
+                                               SelectionMode="None"
+                                               StretchContentForSingleRow="False">
+                    <controls:AdaptiveGridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:IdData">
+                            <Grid x:Name="itemThumbnail"
+                                      MinWidth="130"
+                                      Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+                                <StackPanel HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                    <Image HorizontalAlignment="Center"
+                                               Visibility="Collapsed">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{Binding ImageSource}" />
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock HorizontalAlignment="Center"
+                                                   Visibility="{Binding Path=UseImage, Converter={StaticResource InverseBooleanConverter}}"
+                                                   FontSize="50"
+                                                   Text="{x:Bind Title}" />
+
+                                    <TextBlock HorizontalAlignment="Center"
+                                                   Style="{ThemeResource BodyTextStyle}"
+                                                   Text="{x:Bind MainReading}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:AdaptiveGridView.ItemTemplate>
+                </controls:AdaptiveGridView>
+            </StackPanel>
     </Grid>
+    </ScrollViewer>
 </UserControl>

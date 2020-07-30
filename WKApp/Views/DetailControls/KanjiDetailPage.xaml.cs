@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using WKApp.Core.Helpers;
 using WKApp.Helpers;
@@ -47,6 +52,34 @@ namespace WKApp.Views.DetailControls
         {
             this.InitializeComponent();
         }
+        private static async Task<String> DownloadImage(string url, String fileName)
+        {
+            const String imagesSubdirectory = "DownloadedImages";
+            var rootFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(imagesSubdirectory, CreationCollisionOption.OpenIfExists);
+            String newPath = String.Format("ms-appdata:///local/{0}/{1}", imagesSubdirectory, fileName);
+            var basicProps = await rootFolder.GetBasicPropertiesAsync();
+            if (await rootFolder.FileExistsAsync(fileName) && basicProps.Size > 0)
+                return newPath;
+            var storageFile = await rootFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    byte[] buffer = await client.GetByteArrayAsync(url);
+                    using (Stream stream = await storageFile.OpenStreamForWriteAsync())
+                        stream.Write(buffer, 0, buffer.Length);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            // Use this path to load image
+
+            return newPath;
+        }
+
         private async static void OnMasterMenuItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as KanjiDetailPage;
@@ -55,8 +88,19 @@ namespace WKApp.Views.DetailControls
             var objy = control.KanjiData.Data.First(y => y.id.ToString() == param.Id);
             control.ViewModel.InitializeAsync(objx);
             control.SetMnemonics(objy);
-            //control.mainFrame.Navigate(typeof(LevelsContentGridPage), $"{DataType}!{param}");
 
+            var svgurl = Path.Combine("https://dl1-acc.filmfetch.net/clients/win32/data/dark/kanji", $"{objx.Title.ToCode().ToLower()}.svg");
+            var path = await DownloadImage(svgurl, $"{objx.Title.ToCode().ToLower()}.svg");
+            if (path != null)
+            {
+                StorageFile file =
+                     await StorageFile.GetFileFromApplicationUriAsync(new Uri(path));
+                string text = await Windows.Storage.FileIO.ReadTextAsync(file);
+                //control.webV.Source = new ImageSource);
+                control.webV.NavigateToString(text.Replace("]>", ""));
+                //control.mainFrame.Navigate(typeof(LevelsContentGridPage), $"{DataType}!{param}");
+
+            }
         }
 
         public void SetMnemonics(Kanji item)
@@ -119,6 +163,17 @@ namespace WKApp.Views.DetailControls
             textBlock.FontSize = 16;
             textBlock.TextWrapping = Windows.UI.Xaml.TextWrapping.WrapWholeWords;
             return textBlock;
+        }
+
+        private void itemHero_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ToggleThemeTeachingTip1.IsOpen = true;
+        }
+
+        private void itemHero_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ToggleThemeTeachingTip1.IsOpen = false;
+
         }
     }
 }

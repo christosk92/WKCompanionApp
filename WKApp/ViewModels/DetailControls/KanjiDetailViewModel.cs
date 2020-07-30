@@ -73,9 +73,12 @@ namespace WKApp.ViewModels.DetailControls
         public ICommand ItemClickCommand => _itemClickCommand ?? (_itemClickCommand = new RelayCommand<DataGridData>(OnItemClick));
         public NavigationServiceEx NavigationService => ViewModelLocator.Current.NavigationService;
         public ObservableCollection<IdData> Source { get; } = new ObservableCollection<IdData>();
+        public ObservableCollection<IdData> FoundInVocab { get; } = new ObservableCollection<IdData>();
+
         public List<String> OtherReadings { get; set; } = new List<string>();
         private Nihongo<Kanji> KanjiData => Singleton<Nihongo<Kanji>>.Instance;
         private Nihongo<Radical> RadicalData => Singleton<Nihongo<Radical>>.Instance;
+        private Nihongo<Vocabulary> VocabData => Singleton<Nihongo<Vocabulary>>.Instance;
 
         public KanjiDetailViewModel()
         {
@@ -91,6 +94,7 @@ namespace WKApp.ViewModels.DetailControls
         public void InitializeAsync(IdData kData)
         {
             Source.Clear();
+            FoundInVocab.Clear();
             PassedItem = kData;
             IsKanji = true;
             IsVocab = false;
@@ -123,6 +127,11 @@ namespace WKApp.ViewModels.DetailControls
             {
                 var k = RadicalData.Ids.First(x => long.Parse(x.Id) == c);
                 Source.Add(k);
+            }
+            foreach(var c in Item.data.amalgamation_subject_ids)
+            {
+                var k = VocabData.Ids.First(x => long.Parse(x.Id) == c);
+                FoundInVocab.Add(k);
             }
         }
     }

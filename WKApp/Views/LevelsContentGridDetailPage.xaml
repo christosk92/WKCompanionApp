@@ -16,8 +16,6 @@
             <Grid x:Name="ContentArea"
                   Margin="5">
                 <views:KanjiDetailPage x:Name="kanjiDetailpage" />
-
-
             </Grid>
         </PivotItem>
         <PivotItem Header="My Progression">
