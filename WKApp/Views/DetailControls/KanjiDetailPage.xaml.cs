@@ -96,10 +96,7 @@ namespace WKApp.Views.DetailControls
                 StorageFile file =
                      await StorageFile.GetFileFromApplicationUriAsync(new Uri(path));
                 string text = await Windows.Storage.FileIO.ReadTextAsync(file);
-                //control.webV.Source = new ImageSource);
                 control.webV.NavigateToString(text.Replace("]>", ""));
-                //control.mainFrame.Navigate(typeof(LevelsContentGridPage), $"{DataType}!{param}");
-
             }
         }
 
